@@ -26,12 +26,11 @@ public:
 		//	input->startCapture(device, mode);
 		//	this->inputs.push_back(input);
 		//}
+		rgbImage.load("rgb.jpg");
 		this->camName = "rgb";
 		cv::FileStorage settings(ofToDataPath("calib/settings.yml"), cv::FileStorage::READ);
 		if (settings.isOpened()) {
 			int xCount = settings["xCount"], yCount = settings["yCount"];
-			ofLog() << xCount;
-			ofLog() << yCount;
 			calibration.setPatternSize(xCount, yCount);
 			float squareSize = settings["squareSize"];
 			calibration.setSquareSize(squareSize);
@@ -43,7 +42,7 @@ public:
 			}
 			calibration.setPatternType(patternType);
 		}
-		//calibration.load("calib/rgb_calibration.yml");
+		calibration.load("calib/rgb_calibration.yml");
 	}
 
 
@@ -78,6 +77,7 @@ public:
 	{
 		//inputs[0]->update();
 		//updateCalib(inputs[0]->getPixels());
+		updateCalib(rgbImage.getPixels());
 
 	}
 
@@ -85,16 +85,18 @@ public:
 	{
 		ofPushStyle();
 		ofScale(0.5, 0.5);
-		//if (bDrawUndistort)
-		//{
-		//	if (inputs.size() > 0)
-		//		drawUndistort(inputs[0]->getPixels(), 0, 0);
-		//}
-		//else
-		//{
-		//	if (inputs.size() > 0)
-		//		inputs[0]->draw(x, y);
-		//}
+		if (bDrawUndistort)
+		{
+			//if (inputs.size() > 0)
+			//	drawUndistort(inputs[0]->getPixels(), 0, 0);
+			drawUndistort(rgbImage.getPixels(),0,0);
+		}
+		else
+		{
+			//if (inputs.size() > 0)
+			//	inputs[0]->draw(x, y);
+			rgbImage.draw(x, y);
+		}
 		ofPopStyle();
 	}
 
@@ -130,6 +132,7 @@ public:
 	}
 
 private:
+	ofImage rgbImage;
 	//vector<shared_ptr<ofxBlackmagic::Input> > inputs;
 	const int startCleaning = 10; // start cleaning outliers after this many samples
 	bool bCalib = false;
