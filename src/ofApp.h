@@ -1,5 +1,5 @@
 #pragma once
-#include "ofxBlackMagic.h"
+//#include "ofxBlackMagic.h"
 #include "ofMain.h"
 #include "KinectAlign/Kinect.h"
 #include "KinectAlign/CalibrationWorkflow.h"

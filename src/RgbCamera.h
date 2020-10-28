@@ -1,5 +1,5 @@
 #pragma once
-#include "ofxBlackMagic.h"
+//#include "ofxBlackMagic.h"
 #include "KinectAlign/CalibCam.h"
 
 class RgbCamera : public KinectAlign::CalibCam
@@ -17,15 +17,15 @@ public:
 
 	void setup()
 	{
-		auto deviceList = ofxBlackmagic::Iterator::getDeviceList();
-		for (auto device : deviceList) {
-			auto input = shared_ptr<ofxBlackmagic::Input>(new ofxBlackmagic::Input());
+		//auto deviceList = ofxBlackmagic::Iterator::getDeviceList();
+		//for (auto device : deviceList) {
+		//	auto input = shared_ptr<ofxBlackmagic::Input>(new ofxBlackmagic::Input());
 
-			static int index = 0;
-			auto mode = bmdMode4K2160p2997; // switch this mode to match the resolution/refresh of your input stream
-			input->startCapture(device, mode);
-			this->inputs.push_back(input);
-		}
+		//	static int index = 0;
+		//	auto mode = bmdMode4K2160p2997; // switch this mode to match the resolution/refresh of your input stream
+		//	input->startCapture(device, mode);
+		//	this->inputs.push_back(input);
+		//}
 		this->camName = "rgb";
 		cv::FileStorage settings(ofToDataPath("calib/settings.yml"), cv::FileStorage::READ);
 		if (settings.isOpened()) {
@@ -76,8 +76,8 @@ public:
 
 	void update()
 	{
-		inputs[0]->update();
-		updateCalib(inputs[0]->getPixels());
+		//inputs[0]->update();
+		//updateCalib(inputs[0]->getPixels());
 
 	}
 
@@ -85,16 +85,16 @@ public:
 	{
 		ofPushStyle();
 		ofScale(0.5, 0.5);
-		if (bDrawUndistort)
-		{
-			if (inputs.size() > 0)
-				drawUndistort(inputs[0]->getPixels(), 0, 0);
-		}
-		else
-		{
-			if (inputs.size() > 0)
-				inputs[0]->draw(x, y);
-		}
+		//if (bDrawUndistort)
+		//{
+		//	if (inputs.size() > 0)
+		//		drawUndistort(inputs[0]->getPixels(), 0, 0);
+		//}
+		//else
+		//{
+		//	if (inputs.size() > 0)
+		//		inputs[0]->draw(x, y);
+		//}
 		ofPopStyle();
 	}
 
@@ -107,7 +107,7 @@ public:
 	void saveImage()
 	{
 		ofImage img;
-		img.setFromPixels(inputs[0]->getPixels());
+		//img.setFromPixels(inputs[0]->getPixels());
 		img.update();
 		img.save("corner" + ofToString(ofGetFrameNum()) + ".jpg");
 	}
@@ -130,7 +130,7 @@ public:
 	}
 
 private:
-	vector<shared_ptr<ofxBlackmagic::Input> > inputs;
+	//vector<shared_ptr<ofxBlackmagic::Input> > inputs;
 	const int startCleaning = 10; // start cleaning outliers after this many samples
 	bool bCalib = false;
 };
