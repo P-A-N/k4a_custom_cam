@@ -19,6 +19,7 @@ void ofApp::update()
 {
 	//flow.updateCalib(azure_kinects[0]->getImage < ofx::AzureKinectDK::Image::Color>());
 	rgbCam.update();
+	kinect.update();
 }
 
 //--------------------------------------------------------------
@@ -27,7 +28,7 @@ void ofApp::draw()
 	ofBackground(0);
 	//rgbCam.setDrawUndistort(ofGetKeyPressed());
 	//rgbCam.draw(0, 0);
-	kinect.debugDraw();
+	kinect.drawCalib(0,0);
 	std::ostringstream oss;
 	ofDrawBitmapStringHighlight(std::to_string(ofGetFrameRate()), 10, 20);
 }

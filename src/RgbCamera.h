@@ -26,7 +26,10 @@ public:
 		//	input->startCapture(device, mode);
 		//	this->inputs.push_back(input);
 		//}
-		rgbImage.load("rgb.jpg");
+		ofImage file;
+		file.load("rgb.jpg");
+		calibPixels = file.getPixels();
+		calibTexture = file.getTexture();
 		this->camName = "rgb";
 		cv::FileStorage settings(ofToDataPath("calib/settings.yml"), cv::FileStorage::READ);
 		if (settings.isOpened()) {
@@ -45,59 +48,12 @@ public:
 		calibration.load("calib/rgb_calibration.yml");
 	}
 
-
-	bool updateCalib(ofPixels& img)
-	{
-		bool added = false;
-		if (bCalib)
-		{
-			ofLog() << "do calibrate";
-			//img.resize(1920, 1080);
-			cv::Mat camMat = ofxCv::toCv(img);
-			float curTime = ofGetElapsedTimef();
-
-			if (added = calibration.add(camMat)) {
-				ofLog() << "re-calibrating " << calibration.size();
-				calibration.calibrate();
-				if (calibration.size() > startCleaning) {
-					calibration.clean();
-				}
-				calibration.save("calib/" + camName + "_calibration.yml");
-			}
-			else
-			{
-				ofLog() << "not found";
-			}
-			bCalib = false;
-		}
-		return added;
-	}
-
 	void update()
 	{
 		//inputs[0]->update();
 		//updateCalib(inputs[0]->getPixels());
-		updateCalib(rgbImage.getPixels());
+		updateCalib(calibPixels);
 
-	}
-
-	void draw(int x, int y)
-	{
-		ofPushStyle();
-		ofScale(0.5, 0.5);
-		if (bDrawUndistort)
-		{
-			//if (inputs.size() > 0)
-			//	drawUndistort(inputs[0]->getPixels(), 0, 0);
-			drawUndistort(rgbImage.getPixels(),0,0);
-		}
-		else
-		{
-			//if (inputs.size() > 0)
-			//	inputs[0]->draw(x, y);
-			rgbImage.draw(x, y);
-		}
-		ofPopStyle();
 	}
 
 	virtual void setDistCoeffs() override
@@ -132,8 +88,6 @@ public:
 	}
 
 private:
-	ofImage rgbImage;
 	//vector<shared_ptr<ofxBlackmagic::Input> > inputs;
-	const int startCleaning = 10; // start cleaning outliers after this many samples
-	bool bCalib = false;
+
 };

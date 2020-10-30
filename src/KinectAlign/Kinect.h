@@ -9,10 +9,10 @@ namespace KinectAlign
 	public:
 		Kinect()
 		{
-			_fx=918.356934; _cx=956.913147; _fy=917.901733; _cy=553.601135;
-			_k1 = 0.845932; _k2 = -3.123762; _k3 = 1.713453; _k4 = 0.719347; _k5 = -2.945117; _k6 = 1.641835;
-			_p1 = 0.000795; _p2 = -0.000256;
-			_width = 1920; _height = 1080;
+			_fx= 252.248932; _cx= 256.460632; _fy= 252.244553; _cy= 256.971558;
+			_k1 = 5.242249; _k2 = 3.345925; _k3 = 0.167012; _k4 = 5.571374; _k5 = 5.087757; _k6 = 0.897048;
+			_p1 = 0.000028; _p2 = 0.000047;
+			_width = 512; _height = 512;
 		}
 		
 		void setup()
@@ -39,6 +39,32 @@ namespace KinectAlign
 			//azure_kinects.emplace_back(device);
 			azure_kinects.emplace_back(playback);
 
+		}
+
+		void update()
+		{
+			calibTexture = azure_kinects[0]->getImage<ofx::AzureKinectDK::Image::Infrared>()->getTexture();
+
+		}
+
+		void drawCalib(int x, int y)
+		{
+			ofPushStyle();
+			azure_kinects[0]->getImage<ofx::AzureKinectDK::Image::Infrared>()->draw(0, 0);
+			//ofScale(0.5, 0.5);
+			//if (bDrawUndistort)
+			//{
+			//	if (inputs.size() > 0)
+			//		drawUndistort(inputs[0]->getPixels(), 0, 0);
+			//	drawUndistort(calibPixels, 0, 0);
+			//}
+			//else
+			//{
+			//	if (inputs.size() > 0)
+			//		inputs[0]->draw(x, y);
+			//	calibTexture.draw(x, y);
+			//}
+			ofPopStyle();
 		}
 
 		void debugDraw()
