@@ -19,7 +19,6 @@ namespace KinectAlign
 		{
 			auto conf = ofx::AzureKinectDK::DeviceConfiguration();
 			conf.index = 0;
-			conf.aligne = ofx::AzureKinectDK::PixelAligneTo::COLOR;
 			conf.camera_fps = K4A_FRAMES_PER_SECOND_30;
 			conf.color_format = K4A_IMAGE_FORMAT_COLOR_BGRA32;
 			conf.color_resolution = K4A_COLOR_RESOLUTION_1080P;
@@ -30,8 +29,8 @@ namespace KinectAlign
 			conf.disable_streaming_indicator = false;
 			conf.subordinate_delay_off_master_usec = 0;
 
-			device = std::make_shared<ofx::AzureKinectDK::Device>(conf);
-			device->startCameras();
+			//device = std::make_shared<ofx::AzureKinectDK::Device>(conf);
+			//device->startCameras();
 
 
 			playback = std::make_shared<ofx::AzureKinectDK::Playback>("output.mkv", ofx::AzureKinectDK::PixelAligneTo::COLOR);
@@ -46,7 +45,7 @@ namespace KinectAlign
 		{
 			ofPushStyle();
 			ofScale(0.5, 0.5);
-			azure_kinects[0]->getImage<ofx::AzureKinectDK::Image::Color>()->draw(0, 0);
+			azure_kinects[0]->getImage<ofx::AzureKinectDK::Image::Infrared>()->draw(0, 0);
 			azure_kinects[0]->getImage<ofx::AzureKinectDK::Image::Depth>()->draw(1920, 0);
 			azure_kinects[0]->getImage<ofx::AzureKinectDK::Image::PointCloud>()->draw(1920, 1080);
 			//flow.drawUndistort(azure_kinects[0]->getImage< ofx::AzureKinectDK::Image::Color>(), 0, 1080);

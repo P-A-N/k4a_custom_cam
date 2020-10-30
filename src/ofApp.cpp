@@ -6,7 +6,7 @@ void ofApp::setup() {
 	ofSetFrameRate(60);
 
 	rgbCam.setup();
-
+	kinect.setup();
 	flow.setup();
 }
 
@@ -25,8 +25,9 @@ void ofApp::update()
 void ofApp::draw()
 {
 	ofBackground(0);
-	rgbCam.setDrawUndistort(ofGetKeyPressed());
-	rgbCam.draw(0, 0);
+	//rgbCam.setDrawUndistort(ofGetKeyPressed());
+	//rgbCam.draw(0, 0);
+	kinect.debugDraw();
 	std::ostringstream oss;
 	ofDrawBitmapStringHighlight(std::to_string(ofGetFrameRate()), 10, 20);
 }

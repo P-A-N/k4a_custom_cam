@@ -31,7 +31,7 @@ private:
 
 	KinectAlign::CalibrationWorkflow flow;
 	RgbCamera rgbCam;
-	
+	KinectAlign::Kinect kinect;
 
 };
 	
