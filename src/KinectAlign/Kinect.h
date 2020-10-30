@@ -33,7 +33,7 @@ namespace KinectAlign
 			//device->startCameras();
 
 
-			playback = std::make_shared<ofx::AzureKinectDK::Playback>("output.mkv", ofx::AzureKinectDK::PixelAligneTo::COLOR);
+			playback = std::make_shared<ofx::AzureKinectDK::Playback>("output.mkv", ofx::AzureKinectDK::PixelAligneSetting());
 			playback->startCameras(true);
 
 			//azure_kinects.emplace_back(device);
